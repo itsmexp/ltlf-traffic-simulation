@@ -30,12 +30,17 @@ public class RedLightStatus : MonoBehaviour
         Color goColor = new Color(0.1f, 0.7f, 1f);     // Azzurro/Ciano brillante
 
         if (intersection.useThinkEngine) {
+            bool isNSRed = intersection.isNSRed;
+            bool isEWRed = intersection.isEWRed;
+            bool group1IsNS = intersection.isGroup1NS;
+
             if (lightGroupId == 1) {
-                pointLight.color = intersection.isEWRed ? stopColor : goColor;
+                pointLight.color = group1IsNS ? (isNSRed ? stopColor : goColor) : (isEWRed ? stopColor : goColor);
             } else if (lightGroupId == 2) {
-                pointLight.color = intersection.isNSRed ? stopColor : goColor;
+                pointLight.color = group1IsNS ? (isEWRed ? stopColor : goColor) : (isNSRed ? stopColor : goColor);
             }
-        } else {
+        } 
+        else {
             if(lightGroupId == intersection.currentRedLightsGroup)
                 pointLight.color = stopColor;
             else

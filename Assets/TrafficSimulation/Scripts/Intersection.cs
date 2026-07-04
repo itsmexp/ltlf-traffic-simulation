@@ -100,6 +100,15 @@ namespace TrafficSimulation{
                 else if (max == dotE) segment_WE = seg; // Puntato verso Est
                 else if (max == dotW) segment_EW = seg; // Puntato verso Ovest
             }
+
+            // Capisce dinamicamente se i semafori fisici del Gruppo 1 sono stati posizionati sulla strada NS o EW
+            if (lightsNbr1 != null && lightsNbr1.Count > 0) {
+                if (segment_NS != null && lightsNbr1.Contains(segment_NS)) isGroup1NS = true;
+                else if (segment_SN != null && lightsNbr1.Contains(segment_SN)) isGroup1NS = true;
+                else isGroup1NS = false;
+            } else {
+                isGroup1NS = true; // Fallback se l'utente non ha riempito le liste
+            }
         }
 
         void SwitchLights(){
@@ -235,6 +244,7 @@ namespace TrafficSimulation{
 
         [HideInInspector] public bool isNSRed = true;
         [HideInInspector] public bool isEWRed = true;
+        [HideInInspector] public bool isGroup1NS = true;
 
         [HideInInspector] public bool detected_car_NS;
         [HideInInspector] public bool detected_car_SN;
